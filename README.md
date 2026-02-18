@@ -60,6 +60,21 @@ npm install -g nanny-ai
 
 > **Note:** The npm package is `nanny-ai` because npm's name squatter protection blocked `nanny`. The CLI command is still just `nanny`.
 
+### Install the skill
+
+Install the orchestration skill so your agent knows how to use nanny:
+
+```bash
+npx skills add Michaelliv/nanny
+```
+
+Or for a specific agent:
+
+```bash
+npx skills add Michaelliv/nanny --yes --agent pi
+npx skills add Michaelliv/nanny --yes --agent claude-code
+```
+
 ---
 
 ## Quick Start
