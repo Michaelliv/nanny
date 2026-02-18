@@ -1,7 +1,9 @@
 node_modules/
 dist/
-nanny
-nanny-*
 *.log
 .DS_Store
 .nanny/
+
+# compiled binaries
+/nanny-linux-*
+/nanny-darwin-*
