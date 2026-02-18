@@ -58,10 +58,18 @@ Bad:
 
 Good:
 ```json
-{"description": "Create POST /api/login endpoint. Accept {email, password} in request body. Look up user in users table by email. Compare password with bcrypt hash. Return JWT token with user id and email in payload, 1h expiry. Return 401 with {error: 'invalid credentials'} on failure. Add tests for success, wrong password, and missing user cases.", "check": "npm test"}
+{"description": "Create POST /api/login endpoint in src/routes/auth.ts. Accept {email, password} in request body. Look up user in the users table (src/db/schema.ts) by email using the existing drizzle setup in src/db/index.ts. Compare password with bcrypt hash stored in users.passwordHash column. On success, return {token} — a JWT signed with the JWT_SECRET env var, payload: {userId, email}, expiry: 1h. On failure, return 401 {error: 'invalid credentials'}. Register the route in src/routes/index.ts. Add tests in src/routes/auth.test.ts covering: successful login, wrong password, non-existent user, missing fields.", "check": "npm test"}
 ```
 
-The description should answer: what exactly to build, what the inputs/outputs are, what edge cases to handle, and what success looks like. Think of it as a ticket that a developer could pick up without asking any questions.
+The description should answer:
+- **What** to build — the feature, endpoint, component, function
+- **Where** — which files to create or modify, which existing modules to use
+- **How** — specific implementation details, libraries to use, patterns to follow
+- **Inputs/outputs** — request/response shapes, function signatures, data formats
+- **Edge cases** — error handling, validation, failure modes
+- **Tests** — what to test, where to put the tests
+
+Think of it as a handoff to a developer who's never seen the codebase. They should be able to start working without asking a single question. Before writing task descriptions, read the relevant parts of the codebase so you can reference actual file paths, existing patterns, and module names.
 
 ### 3. Execute the Loop
 
