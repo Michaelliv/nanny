@@ -136,7 +136,9 @@ For complex tasks, delegate to a sub-agent. You supervise — the sub-agent just
 
 ### Launching a sub-agent
 
-Use tmux to run a sub-agent in the background:
+If your agent harness has built-in sub-agent support (e.g. Claude Code's `Task` tool, or similar), use that. It's simpler and stays within the harness's context management.
+
+Otherwise, use tmux to run a sub-agent in the background:
 
 ```bash
 # Launch
@@ -153,7 +155,7 @@ cat /tmp/nanny-task-<id>.log
 tmux kill-session -t task-<id>; rm -f /tmp/nanny-task-<id>.{log,done}
 ```
 
-The prompt you send to the sub-agent should be the task description — that's why detailed descriptions matter. Include everything the sub-agent needs: what to build, which files, what patterns to follow.
+Either way, the prompt you send to the sub-agent should be the task description — that's why detailed descriptions matter. Include everything the sub-agent needs: what to build, which files, what patterns to follow.
 
 ### After the sub-agent finishes
 
