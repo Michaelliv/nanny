@@ -132,13 +132,40 @@ When it returns `{"ok": true, "stuck": true}`, explain which tasks failed and wh
 
 ## Delegating to Sub-Agents
 
-For complex tasks, you can delegate to a sub-agent. The sub-agent does the focused work, you supervise:
+For complex tasks, delegate to a sub-agent. You supervise — the sub-agent just does the focused work.
 
-1. Get the task from `nanny next`
-2. Spawn a sub-agent with a focused prompt for that specific task
-3. Verify the sub-agent's work (check that files were actually created/modified)
-4. Run the check command yourself
-5. Call `nanny done` or `nanny fail` based on the result
+### Launching a sub-agent
+
+Use tmux to run a sub-agent in the background:
+
+```bash
+# Launch
+tmux new-session -d -s task-<id> \
+  'echo "<detailed task prompt>" | pi --print --mode text > /tmp/nanny-task-<id>.log 2>&1; touch /tmp/nanny-task-<id>.done' \; set remain-on-exit on
+
+# Check if done
+[ -f /tmp/nanny-task-<id>.done ] && echo "done" || echo "still running"
+
+# Read output
+cat /tmp/nanny-task-<id>.log
+
+# Cleanup
+tmux kill-session -t task-<id>; rm -f /tmp/nanny-task-<id>.{log,done}
+```
+
+The prompt you send to the sub-agent should be the task description — that's why detailed descriptions matter. Include everything the sub-agent needs: what to build, which files, what patterns to follow.
+
+### After the sub-agent finishes
+
+1. Read the sub-agent's output from the log file
+2. **Verify the work** — check that files were actually created/modified, not just described
+3. Run the check command if the task has one
+4. Call `nanny done` or `nanny fail` based on the result
+5. Clean up the tmux session and temp files
+
+### You can also do the work yourself
+
+Not every task needs a sub-agent. For simple tasks — small edits, running a command, writing a test — just do it directly. Use sub-agents for heavier work where a fresh context is useful.
 
 **Never let the sub-agent call nanny commands.** You are the orchestrator. The sub-agent just does the work.
 
