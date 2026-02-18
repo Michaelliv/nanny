@@ -10,7 +10,7 @@
 
 You tell your agent to "build user authentication." It starts strong, then gets lost halfway through. Forgets what it already did. Retries the wrong thing. Loses context. You come back to a mess.
 
-The [Ralph Wiggum Loop](https://beuke.org/ralph-wiggum-loop/) showed us the fix: attempt, check, feed back errors, retry. Simple. But you need *something* to track what's done, what's next, and what failed — so the agent doesn't just spin in circles.
+The [Ralph Wiggum Loop](https://beuke.org/ralph-wiggum-loop/) showed us the fix: attempt, check, feed back errors, retry. Simple. But you need *something* to track what's done, what's next, and what failed so the agent doesn't just spin in circles.
 
 **nanny is that something.**
 
@@ -40,7 +40,7 @@ It's a task board. Your agent polls it. That's it.
 └──────────┘          └──────────┘
 ```
 
-nanny doesn't run anything. It doesn't launch agents. It doesn't have opinions about how you do the work. It just tracks:
+nanny doesn't run anything. It doesn't launch agents. It doesn't have opinions about how you do the work. It tracks:
 
 - What needs to be done
 - What's in progress
@@ -58,7 +58,7 @@ Your agent reads the state, decides what to do, and writes the result back. nann
 npm install -g nanny-ai
 ```
 
-> **Note:** The npm package is `nanny-ai` because npm's name squatter protection blocked `nanny`. The CLI command is still just `nanny`.
+> **Note:** The npm package is `nanny-ai` because npm name squatter protection blocked `nanny`. The CLI command is still just `nanny`.
 
 ### Install the skill
 
@@ -142,7 +142,7 @@ Returns:
 }
 ```
 
-The `previousError` is the Ralph Wiggum feedback — the agent uses it to fix the issue on the next attempt.
+The `previousError` is the Ralph Wiggum feedback. The agent uses it to fix the issue on the next attempt.
 
 When done:
 ```json
@@ -224,9 +224,9 @@ nanny onboard                  Add nanny instructions to your project
 
 ## The Retry Loop
 
-When a task fails and hasn't exhausted its retries, `nanny fail` automatically requeues it. Next time the agent calls `nanny next`, it gets the same task back — but with `previousError` in the payload.
+When a task fails and hasn't exhausted its retries, `nanny fail` automatically requeues it. Next time the agent calls `nanny next`, it gets the same task back, but with `previousError` in the payload.
 
-This is the Ralph Wiggum loop: the agent's own failure output becomes context for the next attempt. Errors are data.
+This is the Ralph Wiggum loop. The agent's own failure output becomes context for the next attempt. Errors are data.
 
 ```
 attempt 1 → fail "missing import"
@@ -257,7 +257,7 @@ echo '[{
 }]' | nanny add --stdin
 ```
 
-nanny doesn't run checks — it just stores them. The orchestrating agent reads the check definition and decides how to verify.
+nanny doesn't run checks. It just stores them. The orchestrating agent reads the check definition and decides how to verify.
 
 ---
 
@@ -278,7 +278,7 @@ Everything lives in `.nanny/state.json`. One file. Human-readable. Add `.nanny/`
 - **The agent drives.** nanny tracks state. The agent decides what to do.
 - **Errors are data.** Failed attempts feed into the next try.
 - **One file.** No databases, no event logs, no journals. JSON in, JSON out.
-- **Human-readable.** When you peek in, it should be obvious what's happening.
+- **Human-readable.** When you peek in, it's obvious what's happening.
 
 ---
 
