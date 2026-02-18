@@ -17,7 +17,7 @@ const program = new Command();
 
 program
   .name("nanny")
-  .description("Lightweight AI agent task orchestrator")
+  .description("The dumb task loop for smart agents")
   .version(version)
   .option("--json", "Structured JSON output")
   .option("-q, --quiet", "Suppress non-essential output")

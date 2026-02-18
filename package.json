@@ -1,7 +1,7 @@
 {
   "name": "nanny-ai",
   "version": "0.1.0",
-  "description": "Lightweight AI agent loop orchestrator. Ralph Wiggum loops with just enough structure.",
+  "description": "The dumb task loop for smart agents. Ralph Wiggum loops with just enough structure.",
   "module": "src/main.ts",
   "type": "module",
   "bin": {
