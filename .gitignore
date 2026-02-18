@@ -4,3 +4,4 @@ nanny
 nanny-*
 *.log
 .DS_Store
+.nanny/
