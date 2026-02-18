@@ -23,11 +23,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Michaelliv/nannycli.git"
+    "url": "git+https://github.com/Michaelliv/nanny.git"
   },
-  "homepage": "https://github.com/Michaelliv/nannycli#readme",
+  "homepage": "https://github.com/Michaelliv/nanny#readme",
   "bugs": {
-    "url": "https://github.com/Michaelliv/nannycli/issues"
+    "url": "https://github.com/Michaelliv/nanny/issues"
   },
   "keywords": [
     "cli",
