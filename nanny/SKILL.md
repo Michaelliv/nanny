@@ -49,6 +49,20 @@ echo '[
 - Include a `check` command when there's a concrete way to verify (tests, build, lint)
 - Keep tasks small — if it would take a human more than 30 minutes, split it
 
+**Write detailed descriptions.** The description is the spec for whoever does the work. A vague description produces vague results.
+
+Bad:
+```json
+{"description": "implement auth"}
+```
+
+Good:
+```json
+{"description": "Create POST /api/login endpoint. Accept {email, password} in request body. Look up user in users table by email. Compare password with bcrypt hash. Return JWT token with user id and email in payload, 1h expiry. Return 401 with {error: 'invalid credentials'} on failure. Add tests for success, wrong password, and missing user cases.", "check": "npm test"}
+```
+
+The description should answer: what exactly to build, what the inputs/outputs are, what edge cases to handle, and what success looks like. Think of it as a ticket that a developer could pick up without asking any questions.
+
 ### 3. Execute the Loop
 
 ```bash
