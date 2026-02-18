@@ -8,7 +8,7 @@
 
 ## The Problem
 
-You tell your AI agent to "build user authentication." It starts strong, then gets lost halfway through. Forgets what it already did. Retries the wrong thing. Loses context. You come back to a mess.
+You tell your agent to "build user authentication." It starts strong, then gets lost halfway through. Forgets what it already did. Retries the wrong thing. Loses context. You come back to a mess.
 
 The [Ralph Wiggum Loop](https://beuke.org/ralph-wiggum-loop/) showed us the fix: attempt, check, feed back errors, retry. Simple. But you need *something* to track what's done, what's next, and what failed — so the agent doesn't just spin in circles.
 
