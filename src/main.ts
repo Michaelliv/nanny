@@ -43,6 +43,7 @@ program
   .option("--check-agent <prompt>", "Agent scorer prompt")
   .option("--target <n>", "Score threshold for agent check (0-100)")
   .option("--stdin", "Read tasks from JSON stdin")
+  .option("--from <dir>", "Load tasks from markdown files in directory")
   .action((description, opts) =>
     add(description, { ...program.opts(), ...opts }),
   );
