@@ -1,18 +1,20 @@
 {
   "name": "nanny-ai",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "The dumb task loop for smart agents. Ralph Wiggum loops with just enough structure.",
   "module": "src/main.ts",
   "type": "module",
   "bin": {
-    "nanny": "./src/main.ts"
+    "nanny": "./dist/nanny.mjs"
   },
   "files": [
-    "src"
+    "dist"
   ],
   "scripts": {
     "dev": "bun run src/main.ts",
     "build": "bun build --compile src/main.ts --outfile nanny",
+    "build:npm": "bun build src/main.ts --outdir dist --target node --format esm && mv dist/main.js dist/nanny.mjs",
+    "prepublishOnly": "bun run build:npm",
     "build:linux": "bun build --compile --target=bun-linux-x64 src/main.ts --outfile nanny-linux-x64",
     "build:mac-arm": "bun build --compile --target=bun-darwin-arm64 src/main.ts --outfile nanny-darwin-arm64",
     "build:mac-x64": "bun build --compile --target=bun-darwin-x64 src/main.ts --outfile nanny-darwin-x64",

@@ -7,3 +7,4 @@ dist/
 # compiled binaries
 /nanny-linux-*
 /nanny-darwin-*
+dist/

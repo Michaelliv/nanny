@@ -233,13 +233,10 @@ function parseTaskFile(filePath: string): ParsedTaskFile {
 }
 
 async function readStdin(): Promise<string> {
-  const chunks: string[] = [];
-  const reader = Bun.stdin.stream().getReader();
-  const decoder = new TextDecoder();
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    chunks.push(decoder.decode(value, { stream: true }));
-  }
-  return chunks.join("");
+  return new Promise((resolve, reject) => {
+    const chunks: Buffer[] = [];
+    process.stdin.on("data", (chunk) => chunks.push(chunk));
+    process.stdin.on("end", () => resolve(Buffer.concat(chunks).toString("utf-8")));
+    process.stdin.on("error", reject);
+  });
 }

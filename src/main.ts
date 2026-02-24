@@ -1,7 +1,12 @@
-#!/usr/bin/env bun
+#!/usr/bin/env node
 
 import { Command } from "commander";
-import { version } from "../package.json";
+import { readFileSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const { version } = JSON.parse(readFileSync(join(__dirname, "../package.json"), "utf-8"));
 import { init } from "./commands/init.ts";
 import { add } from "./commands/add.ts";
 import { next } from "./commands/next.ts";
