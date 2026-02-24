@@ -6,6 +6,37 @@ import {
   loadState,
   saveState,
 } from "../core/state.ts";
+import type { NannyState, Task } from "../core/types.ts";
+
+function buildPrompt(state: NannyState, task: Task): string {
+  const sections: string[] = [];
+
+  // Progress from completed tasks
+  const done = state.tasks.filter((t) => t.status === "done");
+  if (done.length > 0) {
+    const items = done.map((t) => {
+      let line = `- **Task ${t.id}**: ${t.description}`;
+      if (t.summary) line += `\n  Result: ${t.summary}`;
+      return line;
+    });
+    sections.push(`## Progress So Far\n\n${items.join("\n\n")}`);
+  }
+
+  // Previous error if retrying
+  if (task.lastError) {
+    sections.push(`## Previous Attempt Failed (attempt ${task.attempts - 1}/${task.maxAttempts})\n\n${task.lastError}`);
+  }
+
+  // The task itself
+  sections.push(`## Your Task\n\n${task.description}`);
+
+  // Check info
+  if (task.check?.command) {
+    sections.push(`## Verification\n\nAfter completing the task, the following check will be run:\n\`\`\`\n${task.check.command}\n\`\`\``);
+  }
+
+  return sections.join("\n\n---\n\n");
+}
 
 interface NextOptions {
   file: string;
@@ -25,6 +56,7 @@ export async function next(options: NextOptions): Promise<void> {
           ok: true,
           task: running,
           resumed: true,
+          prompt: buildPrompt(state, running),
         }),
       );
     } else {
@@ -126,6 +158,7 @@ export async function next(options: NextOptions): Promise<void> {
           maxAttempts: task.maxAttempts,
           ...(task.lastError ? { previousError: task.lastError } : {}),
         },
+        prompt: buildPrompt(state, task),
       }),
     );
   } else if (!options.quiet) {
